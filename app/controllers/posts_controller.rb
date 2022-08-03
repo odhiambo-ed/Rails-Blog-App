@@ -1,35 +1,41 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: %i[show edit update destroy]
+
   def index
-    @user = User.find(params[:user_id])
-    @posts = @user.posts.includes(:comments)
+    @user = current_user
+    @posts = @user.posts
   end
 
   def show
     @post = Post.find(params[:id])
-    @user = @post.author
-    @comments = @post.comments
   end
 
   def new
     @post = Post.new
+    @user = current_user
   end
 
   def create
-    @new_post = current_user.posts.new(post_params)
+    @post = Post.new(title: params[:post][:title], text: params[:post][:text], comments_counter: 0,
+                     likes_counter: 0)
+    @post.author_id = current_user.id
+
     respond_to do |format|
-      format.html do
-        if @new_post.save
-          redirect_to "/users/#{@new_post.author.id}/posts/", flash: { alert: 'Your post is saved' }
-        else
-          redirect_to "/users/#{@new_post.author.id}/posts/new", flash: { alert: 'Could not save post' }
-        end
+      if @post.save!
+        format.html { redirect_to new_user_post_url(current_user, @post), notice: 'Post was successfully created.' }
+      else
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
 
   private
 
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
   def post_params
-    params.require(:post).permit(:title, :text)
+    params.require(:post).permit(:title, :text, :comments_counter, :likes_counter)
   end
 end

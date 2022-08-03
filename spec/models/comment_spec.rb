@@ -1,21 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  before(:each) do
-    @user = User.create(name: 'Nemwel', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Taekwondo master.',
-                        post_counter: 0)
-    @post = Post.create(author: @user, title: 'Hello', text: 'This is my first post', likes_counter: 0,
-                        comments_counter: 0)
-    @comment = Comment.new(text: 'comment1', author_id: 1, post_id: 2)
+  subject = Comment.new(text: 'Testing Method')
+  user = User.new(name: 'John', photo: 'https://unsplash.com/photos/2LowviVHZ-E', bio: 'My life story')
+  post = Post.new(title: 'New post came', text: 'Hey buddy are you good!', comments_counter: 0)
+
+  before { subject.save }
+  before { post.save }
+  before { user.save }
+
+  it 'author should be present' do
+    subject.author_id = nil
+    expect(subject).to_not be_valid
   end
 
-  it 'The Text must not be blank' do
-    @comment.text = nil
-    expect(@comment).to_not be_valid
+  it 'post should be present' do
+    subject.post_id = nil
+    expect(subject).to_not be_valid
   end
 
-  it 'The comments author_id must be an integer' do
-    @comment.author_id = 'char'
-    expect(@comment).to_not be_valid
+  it 'author should be correct person' do
+    subject.author_id = user.id
+    expect(subject).to be_truthy
   end
 end

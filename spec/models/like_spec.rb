@@ -1,21 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do
-  before(:each) do
-    @user = User.create(name: 'Nemwel', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Taekwondo master.',
-                        post_counter: 0)
-    @post = Post.create(author: @user, title: 'Hello', text: 'This is my first post', likes_counter: 0,
-                        comments_counter: 0)
-    @like = Like.new(author_id: 1, post_id: 2)
+  subject = Like.new
+  user = User.new(name: 'Edward', photo: 'https://unsplash.com/photos/2LowviVHZ-E', bio: 'This is the story of my life')
+  post = Post.new(title: 'Health post', text: 'This is a Health post', comments_counter: 0)
+
+  before { subject.save }
+  before { post.save }
+  before { user.save }
+
+  it 'author should be present' do
+    subject.author_id = nil
+    expect(subject).to_not be_valid
   end
 
-  it 'The author_id must not be blank' do
-    @like.author_id = false
-    expect(@like).to_not be_valid
+  it 'post should be present' do
+    subject.post_id = nil
+    expect(subject).to_not be_valid
   end
 
-  it 'The post_id must not be blank' do
-    @like.post_id = nil
-    expect(@like).to_not be_valid
+  it 'author should be correct person' do
+    subject.author_id = user.id
+    expect(subject).to be_truthy
   end
 end
