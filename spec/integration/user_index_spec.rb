@@ -5,7 +5,8 @@ RSpec.describe 'Test User Index Page', type: :feature do
     before(:each) do
       @first_user = User.create(name: 'Arnold', photo: 'image1.png', bio: 'This my first life story', posts_counter: 10)
       @first_user.save!
-      @second_user = User.create(name: 'Livingi', photo: 'image2.png', bio: 'This my second life story', posts_counter: 50)
+      @second_user = User.create(name: 'Livingi', photo: 'image2.png', bio: 'This my second life story',
+                                 posts_counter: 50)
       @second_user.save!
       @third_user = User.create(name: 'Shawn', photo: 'image3.png', bio: 'This my third life story', posts_counter: 40)
       @third_user.save!
