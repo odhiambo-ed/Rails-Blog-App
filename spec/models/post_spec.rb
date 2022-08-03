@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  subject { Post.new(title: 'Taiwan puts the ball firmly in Xi Jinping court', text: 'Now that US House Speaker Nancy Pelosi has managed to visit Taiwan') }
+  subject do
+    Post.new(title: 'Taiwan puts the ball firmly in Xi Jinping court',
+             text: 'Now that US House Speaker Nancy Pelosi has managed to visit Taiwan')
+  end
 
   before { subject.save }
 
