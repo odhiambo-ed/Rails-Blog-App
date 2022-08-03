@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Post show', type: :feature do
   describe 'Post' do
     before(:each) do
-      @first_user = User.create(name: 'Tom', photo: 'margaret.jpeg', bio: 'Teacher from Mexico.', posts_counter: 0)
+      @first_user = User.create(name: 'Tom', photo: 'Evans.jpeg', bio: 'A Student at Microverse', posts_counter: 0)
       @first_user.save!
-      @second_user = User.create(name: 'Lilly', photo: 'margaret.jpeg', bio: 'Teacher from Poland.', posts_counter: 0)
+      @second_user = User.create(name: 'Lilly', photo: 'Evans.jpeg', bio: 'A Mentor at Microverse.', posts_counter: 0)
       @second_user.save!
       visit root_path
 

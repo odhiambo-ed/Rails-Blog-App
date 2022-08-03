@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'posts#index', type: :feature do
   describe 'Post' do
     before(:each) do
-      @user1 = User.create(name: 'Margaret', photo: 'margaret.jpeg', bio: 'bio', posts_counter: 0)
+      @user1 = User.create(name: 'Evans', photo: 'Evans.jpeg', bio: 'This is a bio for me Evans', posts_counter: 0)
       @user1.save!
       visit root_path
 
@@ -21,12 +21,12 @@ RSpec.describe 'posts#index', type: :feature do
 
     it "shows user's profile picture" do
       visit(user_posts_path(@user1.id))
-      expect(page).to have_css('img[src*="margaret.jpeg"]')
+      expect(page).to have_css('img[src*="Evans.jpeg"]')
     end
 
     it 'shows the users username' do
       visit(user_posts_path(@user1.id))
-      expect(page).to have_content('Margaret')
+      expect(page).to have_content('Evans')
     end
 
     it 'shows number of posts of user has written' do

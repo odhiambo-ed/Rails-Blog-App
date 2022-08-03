@@ -5,20 +5,20 @@ RSpec.describe 'Test Show user Page', type: :feature do
     before(:each) do
       @user = User.create(name: 'Mohammed', photo: 'image1.png', bio: 'bio1', posts_counter: 0)
       @user.save!
-      @first_post = Post.create(author: @user, title: 'My first post', text: 'post1 text',
+      @first_post = Post.create(author: @user, title: 'My first post', text: 'This is my first post on this site. Can you believe it?',
                                 comments_counter: 0, likes_counter: 0, id: 1)
-      @second_post = Post.create(author: @user, title: 'My second post', text: 'post2 text',
+      @second_post = Post.create(author: @user, title: 'My second post', text: 'This is my second post on this site. Can you believe it?',
                                  comments_counter: 0, likes_counter: 0, id: 2)
-      @third_post = Post.create(author: @user, title: 'My third post', text: 'post3 text',
+      @third_post = Post.create(author: @user, title: 'My third post', text: 'This is my third post on this site. Can you believe it?',
                                 comments_counter: 0, likes_counter: 0, id: 3)
-      @fourth_post = Post.create(author: @user, title: 'My last post',
-                                 text: 'last post text', comments_counter: 0, likes_counter: 0, id: 4)
+      @fourth_post = Post.create(author: @user, title: 'My fourth post',
+                                 text: 'This is my fourth post on this site. Can you believe it?', comments_counter: 0, likes_counter: 0, id: 4)
 
       visit(user_path(id: @user.id))
     end
 
     it 'shows the user username' do
-      expect(page).to have_content('Mohammed')
+      expect(page).to have_content('Arnold')
     end
 
     it 'shows the user profile picture' do
@@ -26,11 +26,11 @@ RSpec.describe 'Test Show user Page', type: :feature do
     end
 
     it 'shows the user bio' do
-      expect(page).to have_content('bio1')
+      expect(page).to have_content('This my first life story')
     end
 
     it 'shows the number of posts the user has written' do
-      expect(page).to have_content('4')
+      expect(page).to have_content('10')
     end
 
     it 'shows all the posts the user has written' do
