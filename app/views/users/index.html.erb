@@ -1,16 +1,12 @@
-<%= stylesheet_link_tag "application" %>
+<section class="container">
+    <% @users.each do |user| %>
+        <div class="user-box">
+            <img class="image-user" src=<%= user.photo %> alt="user">
+            <div class="user-info">
+                <p class="user-name"><%= link_to user.name, user %></p>
+                <p class="user-post">Number of posts: <%= user.posts_counter%></p>
+            </div>
+        </div>
+    <% end %>
 
-<div class="users">
-  <h2>List of all Users:</h2>
-
-  <%@users.each do |user|%>
-    <div class="user">
-      <img src="<%=user.photo%>" alt="User image" height="150" width="150" >
-      <div class="user_details">
-        <h3><%= user.name %></h3>
-        <p>Number of posts: <%=user.post_counter%>
-        <%= link_to 'All posts', user_posts_path(user.id), class: "btn btn-primary" %>
-      </div>
-    </div>
-  <%end%>
-</div>
+</section>
