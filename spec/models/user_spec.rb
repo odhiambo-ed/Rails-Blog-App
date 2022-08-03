@@ -1,22 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it 'User should not be valid without valid attributes' do
-    expect(User.new).to_not be_valid
+  subject { User.new(name: 'Edward', photo: 'https://unsplash.com/photos/2LowviVHZ-E', bio: 'This is the story of my life') }
+
+  before { subject.save }
+
+  it 'name should not be empty' do
+    subject.name = nil
+    expect(subject).to_not be_valid
   end
 
-  it 'User should not be valid without a name' do
-    person = User.new(name: nil)
-    expect(person).to_not be_valid
+  it 'Lenth should be three' do
+    posts = User.three_most_recent_posts(User.first.id)
+    expect(posts.length).to eq(3)
   end
 
-  it 'post counter should not be valid without integer' do
-    person = User.new(post_counter: nil)
-    expect(person).to_not be_valid
+  it 'PostsCounter must be greater than or equal to zero.' do
+    subject.posts_counter = -1
+    expect(subject).to_not be_valid
   end
 
-  it 'Most recent user returns only three posts' do
-    person = User.most_recent_posts.length
-    expect(person).to be <= 3
+  it 'Comments should be 5' do
+    comments = Post.five_recent_comments(User.first.id, User.first.posts.first.id)
+    expect(comments.length).to eq(5)
+  end
+
+  it 'PostsCounter should be 2 ' do
+    Post.update_user_posts_counter(User.first.id)
+    Post.update_user_posts_counter(User.first.id)
+    posts_count = User.first.posts_counter
+    expect(posts_count).to eq(2)
   end
 end

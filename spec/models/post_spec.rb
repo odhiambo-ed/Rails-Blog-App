@@ -1,37 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  it 'Post should not be valid without valid attributes' do
-    expect(Post.new).to_not be_valid
+  subject do
+    Post.new(title: 'Taiwan puts the ball firmly in Xi Jinping court',
+             text: 'Now that US House Speaker Nancy Pelosi has managed to visit Taiwan')
   end
 
-  it 'Post title should not be empty' do
-    post = Post.new(title: nil)
-    expect(post).to_not be_valid
+  before { subject.save }
+
+  it 'name should not be empty' do
+    subject.title = nil
+    expect(subject).to_not be_valid
   end
 
-  it 'Post comment counter should not be a nil' do
-    post = Post.new(comments_counter: nil)
-    expect(post).to_not be_valid
+  it 'Title must not exceed 250 characters' do
+    subject.title = [1..300]
+    expect(subject).to_not be_valid
   end
 
-  it 'Post comment counter should not be a string' do
-    post = Post.new(comments_counter: 'one')
-    expect(post).to_not be_valid
+  it 'LikesCounter must be greater than or equal to zero.' do
+    subject.likes_counter = -1
+    expect(subject).to_not be_valid
   end
 
-  it 'Likes comment counter should not be a nil' do
-    post = Post.new(likes_counter: nil)
-    expect(post).to_not be_valid
-  end
-
-  it 'Likes comment counter should not be a string' do
-    post = Post.new(likes_counter: 'one')
-    expect(post).to_not be_valid
-  end
-
-  it 'Most recent comments returns most recent 5 comments' do
-    comment = Post.most_recent_comments.length
-    expect(comment).to be <= 5
+  it 'CommentsCounter must be greater than or equal to zero.' do
+    subject.comments_counter = -1
+    expect(subject).to_not be_valid
   end
 end

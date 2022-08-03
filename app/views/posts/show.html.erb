@@ -1,31 +1,27 @@
-<div class="all-post">
-  <div class="post-header">
+<section class="container">
     <div class="post-info">
-      <p>Post: #<%= @post.id %></p>
-      <p>By: <%= @user.Name %></p>
+        <div class="post-title-box">
+            <p class="post-title">Post : <%= @post.title %> by <%= @post.author.name %></p>
+            <p class="comment-text">Comments: <%= @post.comments_counter || 0 %>, Likes: <%= @post.likes_counter || 0 %></p>
+        </div>
+        <p><%= @post.text %></p>
     </div>
-    <div class="comments-likes">
-      <p>comments: <%= !@post.CommentsCounter ? 0 : @post.CommentsCounter %></p>
-      <p>Likes: <%= !@post.LikesCounter ? 0 : @post.LikesCounter %></p>
+    <div class="comment-info">
+        <% @post.recent_comments.each do |comment| %>
+            <div>
+                <p>
+                    <span>
+                        <%= comment.author.name %>:
+                    </span>
+                    <span>
+                        <%= comment.text %>
+                    </span>
+                </p>
+            </div>
+        <% end %>
     </div>
-  </div>
-  <div class="post-text">
-    <p><%= @post.Text %></p>
-  </div>
-  <div>
-  <div class="likes">
-  <i class="far fa-thumbs-up"></i><%= button_to "Like", like_path(@user, @post), method: "put", class: 'btn btn-secondary'%>
-  </div>
-  </div>
-</div>
-<div class="create-comment">
-<%= render 'comments/comment' %>
-</div>
-<div class="comments">
-<% @comments.each do |comment| %>
-  <div class="comment">
-    <p class="user-name"><%= User.find_by(id: comment.Author_id).Name %>: </p>
-    <p class="ml-2"> <%= comment.Text %> </p>
-  </div>
-<% end %>
-</div>
+    <div class="button-user">
+        <%= button_to "Add Comment", new_user_post_comment_path(@post.author, @post), method: :get, class: "button" %>
+        <%= button_to "Add Like", new_user_post_like_path(@post.author, @post), method: :get, class: "button" %>
+    </div>
+</section>
