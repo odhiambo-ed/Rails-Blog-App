@@ -1,5 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject = Comment.new(text: 'Testing Method')
+  user = User.new(name: 'John', photo: 'https://unsplash.com/photos/2LowviVHZ-E', bio: 'My life story')
+  post = Post.new(title: 'New post came', text: 'Hey buddy are you good!', comments_counter: 0)
+
+  before { subject.save }
+  before { post.save }
+  before { user.save }
+
+  it 'author should be present' do
+    subject.author_id = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'post should be present' do
+    subject.post_id = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'author should be correct person' do
+    subject.author_id = user.id
+    expect(subject).to be_truthy
+  end
 end
